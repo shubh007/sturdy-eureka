@@ -1,10 +1,15 @@
 package com.coderscafe.sturdyeureka.core.dp.dpimpl;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
 import com.coderscafe.sturdyeureka.core.dp.ConstructString;
 
 import java.util.*;
 
-public class ConstructStringMemoized implements ConstructString {
+public class ConstructStringMemoized extends ConstructString {
+
+    public ConstructStringMemoized() {
+        dpApproachType = DpApproachType.MEMOIZATION;
+    }
 
     @Override
     public boolean canConstruct(List<String> availableString, String targetString) {

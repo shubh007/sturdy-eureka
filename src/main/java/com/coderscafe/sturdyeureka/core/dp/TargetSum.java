@@ -1,11 +1,16 @@
 package com.coderscafe.sturdyeureka.core.dp;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
+
 import java.util.List;
 
-public interface TargetSum {
-    boolean canSum(List<Integer> numbers, int targetSum);
+public abstract class TargetSum {
 
-    List<Integer> howSum(List<Integer> numbers, int targetSum);
+    public DpApproachType dpApproachType;
 
-    List<Integer> bestSum(List<Integer> numbers, int targetSum);
+    public abstract boolean canSum(List<Integer> numbers, int targetSum);
+
+    public abstract List<Integer> howSum(List<Integer> numbers, int targetSum);
+
+    public abstract List<Integer> bestSum(List<Integer> numbers, int targetSum);
 }

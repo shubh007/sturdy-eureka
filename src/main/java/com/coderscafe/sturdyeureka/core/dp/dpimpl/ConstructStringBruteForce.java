@@ -1,12 +1,17 @@
 package com.coderscafe.sturdyeureka.core.dp.dpimpl;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
 import com.coderscafe.sturdyeureka.core.dp.ConstructString;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ConstructStringBruteForce implements ConstructString {
+public class ConstructStringBruteForce extends ConstructString {
+
+    public ConstructStringBruteForce() {
+        dpApproachType = DpApproachType.BRUTEFORCE;
+    }
 
     @Override
     public boolean canConstruct(List<String> availableString, String targetString) {

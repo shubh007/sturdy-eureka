@@ -1,5 +1,10 @@
 package com.coderscafe.sturdyeureka.core.dp;
 
-public interface GridTraveler {
-    long travelGrid(int row, int col, int noOfRows, int noOfCols);
+
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
+
+public abstract class GridTraveler {
+    public DpApproachType dpApproachType;
+
+    public abstract long travelGrid(int rows, int cols);
 }

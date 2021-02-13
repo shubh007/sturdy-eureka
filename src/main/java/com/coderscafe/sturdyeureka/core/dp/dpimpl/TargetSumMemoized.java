@@ -1,5 +1,6 @@
 package com.coderscafe.sturdyeureka.core.dp.dpimpl;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
 import com.coderscafe.sturdyeureka.core.dp.TargetSum;
 
 import java.util.ArrayList;
@@ -7,7 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TargetSumMemoized implements TargetSum {
+public class TargetSumMemoized extends TargetSum {
+
+    public TargetSumMemoized() {
+        dpApproachType = DpApproachType.MEMOIZATION;
+    }
+
     @Override
     public boolean canSum(List<Integer> numbers, int targetSum) {
         return canSum(numbers, targetSum, new HashMap<>());

@@ -1,11 +1,16 @@
 package com.coderscafe.sturdyeureka.core.dp.dpimpl;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
 import com.coderscafe.sturdyeureka.core.dp.FibonacciNumber;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FibonacciNumberMemoized implements FibonacciNumber {
+public class FibonacciNumberMemoized extends FibonacciNumber {
+
+    public FibonacciNumberMemoized() {
+        dpApproachType = DpApproachType.MEMOIZATION;
+    }
 
     @Override
     public long getNthFibonacci(int n) {

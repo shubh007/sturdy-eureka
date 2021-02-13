@@ -2,6 +2,8 @@ package com.coderscafe.sturdyeureka.core.dp;
 
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringBruteForce;
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringMemoized;
+import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringTabulation;
+import com.coderscafe.sturdyeureka.utils.CommonUtils;
 import com.google.common.base.Stopwatch;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,19 +15,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 
 class ConstructStringTest {
 
-    private static ConstructString constructStringBruteForce;
-    private static ConstructString constructStringMemoized;
+    private static ConstructString[] constructStringImpls;
 
     @BeforeAll
     public static void setup() {
-        constructStringBruteForce = new ConstructStringBruteForce();
-        constructStringMemoized = new ConstructStringMemoized();
+        constructStringImpls = new ConstructString[]{new ConstructStringBruteForce(), new ConstructStringMemoized(), new ConstructStringTabulation()};
     }
 
     private static Stream<Arguments> canConstructData() {
@@ -68,63 +67,36 @@ class ConstructStringTest {
     @ParameterizedTest
     @MethodSource("canConstructData")
     void canConstruct(String targetString, List<String> availableString, boolean expected) {
-        Stopwatch stopwatchBf = Stopwatch.createStarted();
-        boolean accBf = constructStringBruteForce.canConstruct(availableString, targetString);
-        stopwatchBf.stop();
-        Assertions.assertEquals(expected, accBf);
-
-        Stopwatch stopwatchMemo = Stopwatch.createStarted();
-        boolean accMemo = constructStringMemoized.canConstruct(availableString, targetString);
-        stopwatchMemo.stop();
-        Assertions.assertEquals(expected, accMemo);
-
-        System.out.println("Time elapsed In NANOSECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.NANOSECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.NANOSECONDS));
-        System.out.println("Time elapsed In MILLISECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.MILLISECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.MILLISECONDS));
-        System.out.println("Time elapsed In SECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.SECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.SECONDS));
+        for (ConstructString constructStringImpl : constructStringImpls) {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            boolean acc = constructStringImpl.canConstruct(availableString, targetString);
+            stopwatch.stop();
+            Assertions.assertEquals(expected, acc);
+            CommonUtils.printStats(stopwatch, constructStringImpl.dpApproachType);
+        }
     }
 
     @ParameterizedTest
     @MethodSource("countConstructData")
     void countConstruct(String targetString, List<String> availableString, int expected) {
-        Stopwatch stopwatchBf = Stopwatch.createStarted();
-        int accBf = constructStringBruteForce.countConstruct(availableString, targetString);
-        stopwatchBf.stop();
-        Assertions.assertEquals(expected, accBf);
-
-        Stopwatch stopwatchMemo = Stopwatch.createStarted();
-        int accMemo = constructStringMemoized.countConstruct(availableString, targetString);
-        stopwatchMemo.stop();
-        Assertions.assertEquals(expected, accMemo);
-
-        System.out.println("Time elapsed In NANOSECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.NANOSECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.NANOSECONDS));
-        System.out.println("Time elapsed In MILLISECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.MILLISECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.MILLISECONDS));
-        System.out.println("Time elapsed In SECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.SECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.SECONDS));
+        for (ConstructString constructStringImpl : constructStringImpls) {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            int acc = constructStringImpl.countConstruct(availableString, targetString);
+            stopwatch.stop();
+            Assertions.assertEquals(expected, acc);
+            CommonUtils.printStats(stopwatch, constructStringImpl.dpApproachType);
+        }
     }
 
     @ParameterizedTest
     @MethodSource("allConstructData")
     void allConstruct(String targetString, List<String> availableString, List<List<String>> expected) {
-        Stopwatch stopwatchBf = Stopwatch.createStarted();
-        List<List<String>> accBf = constructStringBruteForce.allConstruct(availableString, targetString);
-        stopwatchBf.stop();
-        Assertions.assertEquals(expected, accBf);
-
-        Stopwatch stopwatchMemo = Stopwatch.createStarted();
-        List<List<String>> accMemo = constructStringMemoized.allConstruct(availableString, targetString);
-        stopwatchMemo.stop();
-        Assertions.assertEquals(expected, accMemo);
-
-        System.out.println("Time elapsed In NANOSECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.NANOSECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.NANOSECONDS));
-        System.out.println("Time elapsed In MILLISECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.MILLISECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.MILLISECONDS));
-        System.out.println("Time elapsed In SECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.SECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.SECONDS));
+        for (ConstructString constructStringImpl : constructStringImpls) {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            List<List<String>> acc = constructStringImpl.allConstruct(availableString, targetString);
+            stopwatch.stop();
+            Assertions.assertEquals(expected, acc);
+            CommonUtils.printStats(stopwatch, constructStringImpl.dpApproachType);
+        }
     }
 }

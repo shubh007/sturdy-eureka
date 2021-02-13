@@ -1,11 +1,16 @@
 package com.coderscafe.sturdyeureka.core.dp.dpimpl;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
 import com.coderscafe.sturdyeureka.core.dp.TargetSum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TargetSumBruteForce implements TargetSum {
+public class TargetSumBruteForce extends TargetSum {
+
+    public TargetSumBruteForce() {
+        dpApproachType = DpApproachType.BRUTEFORCE;
+    }
 
     @Override
     public boolean canSum(List<Integer> numbers, int targetSum) {

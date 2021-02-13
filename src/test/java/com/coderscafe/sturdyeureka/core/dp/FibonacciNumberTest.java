@@ -2,6 +2,8 @@ package com.coderscafe.sturdyeureka.core.dp;
 
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.FibonacciNumberBruteForce;
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.FibonacciNumberMemoized;
+import com.coderscafe.sturdyeureka.core.dp.dpimpl.FibonacciNumberTabulation;
+import com.coderscafe.sturdyeureka.utils.CommonUtils;
 import com.google.common.base.Stopwatch;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,18 +11,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 class FibonacciNumberTest {
 
-    private static FibonacciNumber fibonacciNumberBruteForce;
-    private static FibonacciNumber fibonacciNumberMemoized;
+    private static FibonacciNumber[] fibonacciNumberImpls;
 
     @BeforeAll
     public static void setup() {
-        fibonacciNumberBruteForce = new FibonacciNumberBruteForce();
-        fibonacciNumberMemoized = new FibonacciNumberMemoized();
+        fibonacciNumberImpls = new FibonacciNumber[]{new FibonacciNumberBruteForce(), new FibonacciNumberMemoized(), new FibonacciNumberTabulation()};
     }
 
     private static Stream<Arguments> fibData() {
@@ -36,22 +35,13 @@ class FibonacciNumberTest {
     @ParameterizedTest
     @MethodSource("fibData")
     void getNthFibonacci(int n, long expected) {
-        Stopwatch stopwatchBf = Stopwatch.createStarted();
-        long accBf = fibonacciNumberBruteForce.getNthFibonacci(n);
-        stopwatchBf.stop();
-        Assertions.assertEquals(expected, accBf);
-
-        Stopwatch stopwatchMemo = Stopwatch.createStarted();
-        long accMemo = fibonacciNumberMemoized.getNthFibonacci(n);
-        stopwatchMemo.stop();
-        Assertions.assertEquals(expected, accMemo);
-
-        System.out.println("Time elapsed In NANOSECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.NANOSECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.NANOSECONDS));
-        System.out.println("Time elapsed In MILLISECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.MILLISECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.MILLISECONDS));
-        System.out.println("Time elapsed In SECONDS: BruteForce : " + stopwatchBf.elapsed(TimeUnit.SECONDS)
-                + " , Memoized : " + stopwatchMemo.elapsed(TimeUnit.SECONDS));
+        for (FibonacciNumber fibonacciNumberImpl : fibonacciNumberImpls) {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            long acc = fibonacciNumberImpl.getNthFibonacci(n);
+            stopwatch.stop();
+            Assertions.assertEquals(expected, acc);
+            CommonUtils.printStats(stopwatch, fibonacciNumberImpl.dpApproachType);
+        }
     }
 
 }

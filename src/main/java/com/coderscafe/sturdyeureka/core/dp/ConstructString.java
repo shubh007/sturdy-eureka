@@ -1,11 +1,17 @@
 package com.coderscafe.sturdyeureka.core.dp;
 
+
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
+
 import java.util.List;
 
-public interface ConstructString {
-    boolean canConstruct(List<String> availableString, String targetString);
+public abstract class ConstructString {
 
-    int countConstruct(List<String> availableString, String targetString);
+    public DpApproachType dpApproachType;
 
-    List<List<String>> allConstruct(List<String> availableString, String targetString);
+    public abstract boolean canConstruct(List<String> availableString, String targetString);
+
+    public abstract int countConstruct(List<String> availableString, String targetString);
+
+    public abstract List<List<String>> allConstruct(List<String> availableString, String targetString);
 }
