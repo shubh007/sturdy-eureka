@@ -105,9 +105,9 @@ class ConstructStringTest {
             Stopwatch stopwatch = Stopwatch.createStarted();
             List<List<String>> acc = constructStringImpl.allConstruct(availableString, targetString);
             stopwatch.stop();
-            if(constructStringImpl.dpApproachType.equals(DpApproachType.TABULATION)){
+            if (constructStringImpl.dpApproachType.equals(DpApproachType.TABULATION)) {
                 Assertions.assertEquals(tabuExpected, acc);
-            }else {
+            } else {
                 Assertions.assertEquals(expected, acc);
             }
             CommonUtils.printStats(stopwatch, constructStringImpl.dpApproachType);

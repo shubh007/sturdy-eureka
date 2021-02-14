@@ -15,14 +15,14 @@ public class ConstructStringTabulation extends ConstructString {
     @Override
     public boolean canConstruct(List<String> availableString, String targetString) {
         int len = targetString.length();
-        boolean[] isPossible = new boolean[len+1];
+        boolean[] isPossible = new boolean[len + 1];
         isPossible[0] = true;
-        for (int currLen = 0 ; currLen <= len ; currLen++){
-            if(isPossible[currLen]){
-                for(String word : availableString){
-                    if(targetString.startsWith(word,currLen)){
-                        int index = currLen+word.length();
-                        if(index == len){
+        for (int currLen = 0; currLen <= len; currLen++) {
+            if (isPossible[currLen]) {
+                for (String word : availableString) {
+                    if (targetString.startsWith(word, currLen)) {
+                        int index = currLen + word.length();
+                        if (index == len) {
                             return true;
                         }
                         isPossible[index] = true;
@@ -36,13 +36,13 @@ public class ConstructStringTabulation extends ConstructString {
     @Override
     public int countConstruct(List<String> availableString, String targetString) {
         int len = targetString.length();
-        int[] countWays = new int[len+1];
+        int[] countWays = new int[len + 1];
         countWays[0] = 1;
-        for (int currLen = 0 ; currLen <= len ; currLen++){
-            if(countWays[currLen] > 0){
-                for(String word:availableString){
-                    if(targetString.startsWith(word,currLen)){
-                        countWays[currLen+word.length()] += countWays[currLen];
+        for (int currLen = 0; currLen <= len; currLen++) {
+            if (countWays[currLen] > 0) {
+                for (String word : availableString) {
+                    if (targetString.startsWith(word, currLen)) {
+                        countWays[currLen + word.length()] += countWays[currLen];
                     }
                 }
             }
@@ -54,22 +54,22 @@ public class ConstructStringTabulation extends ConstructString {
     public List<List<String>> allConstruct(List<String> availableString, String targetString) {
         int len = targetString.length();
         List<List<List<String>>> constructs = new ArrayList<>();
-        for (int index = 0 ; index <= len ; index++){
+        for (int index = 0; index <= len; index++) {
             constructs.add(new ArrayList<>());
         }
         constructs.get(0).add(new ArrayList<>());
-        for (int currLen = 0 ; currLen <= len ; currLen++){
-            if(!constructs.get(currLen).isEmpty()){
+        for (int currLen = 0; currLen <= len; currLen++) {
+            if (!constructs.get(currLen).isEmpty()) {
                 List<List<String>> currConst = constructs.get(currLen);
-                for(String word:availableString){
-                    if(targetString.startsWith(word,currLen)){
-                        List<List<String>> newConst = constructs.get(currLen+word.length());
-                        for (List<String> temp : currConst){
+                for (String word : availableString) {
+                    if (targetString.startsWith(word, currLen)) {
+                        List<List<String>> newConst = constructs.get(currLen + word.length());
+                        for (List<String> temp : currConst) {
                             List<String> tempCopy = new ArrayList<>(temp);
                             tempCopy.add(word);
                             newConst.add(tempCopy);
                         }
-                        constructs.set(currLen+word.length(),newConst);
+                        constructs.set(currLen + word.length(), newConst);
                     }
                 }
             }
