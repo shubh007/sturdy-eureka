@@ -2,7 +2,6 @@ package com.coderscafe.sturdyeureka.core.dp;
 
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringBruteForce;
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringMemoized;
-import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringTabulation;
 import com.coderscafe.sturdyeureka.utils.CommonUtils;
 import com.google.common.base.Stopwatch;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +23,7 @@ class ConstructStringTest {
 
     @BeforeAll
     public static void setup() {
-        constructStringImpls = new ConstructString[]{new ConstructStringBruteForce(), new ConstructStringMemoized(), new ConstructStringTabulation()};
+        constructStringImpls = new ConstructString[]{new ConstructStringBruteForce(), new ConstructStringMemoized()};
     }
 
     private static Stream<Arguments> canConstructData() {
