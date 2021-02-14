@@ -1,7 +1,9 @@
 package com.coderscafe.sturdyeureka.core.dp;
 
+import com.coderscafe.sturdyeureka.constant.enums.DpApproachType;
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringBruteForce;
 import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringMemoized;
+import com.coderscafe.sturdyeureka.core.dp.dpimpl.ConstructStringTabulation;
 import com.coderscafe.sturdyeureka.utils.CommonUtils;
 import com.google.common.base.Stopwatch;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +25,7 @@ class ConstructStringTest {
 
     @BeforeAll
     public static void setup() {
-        constructStringImpls = new ConstructString[]{new ConstructStringBruteForce(), new ConstructStringMemoized()};
+        constructStringImpls = new ConstructString[]{new ConstructStringBruteForce(), new ConstructStringMemoized(), new ConstructStringTabulation()};
     }
 
     private static Stream<Arguments> canConstructData() {
@@ -50,16 +52,24 @@ class ConstructStringTest {
                 Arguments.of("purple", Arrays.asList("purp", "p", "ur", "le", "purpl"), Arrays.asList(
                         Arrays.asList("le", "purp"),
                         Arrays.asList("le", "p", "ur", "p")
+                ), Arrays.asList(
+                        Arrays.asList("purp", "le"),
+                        Arrays.asList("p", "ur", "p", "le")
                 )),
                 Arguments.of("abcdef", Arrays.asList("ab", "abc", "cd", "def", "abcd", "ef", "c"), Arrays.asList(
                         Arrays.asList("ef", "cd", "ab"),
                         Arrays.asList("def", "c", "ab"),
                         Arrays.asList("def", "abc"),
                         Arrays.asList("ef", "abcd")
+                ), Arrays.asList(
+                        Arrays.asList("abc", "def"),
+                        Arrays.asList("ab", "c", "def"),
+                        Arrays.asList("abcd", "ef"),
+                        Arrays.asList("ab", "cd", "ef")
                 )),
-                Arguments.of("skateboard", Arrays.asList("bo", "rd", "ate", "t", "ska", "sk", "boar"), new ArrayList<>()),
-                Arguments.of("aaaaaaaaaaaaaaaaaaaaaaaaaaaz", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa"), new ArrayList<>()),
-                Arguments.of("", Arrays.asList("cat", "dog", "mouse"), Collections.singletonList(new ArrayList<>()))
+                Arguments.of("skateboard", Arrays.asList("bo", "rd", "ate", "t", "ska", "sk", "boar"), new ArrayList<>(), new ArrayList<>()),
+                Arguments.of("aaaaaaaaaaaaaaaaaaaaaaaaaaaz", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa"), new ArrayList<>(), new ArrayList<>()),
+                Arguments.of("", Arrays.asList("cat", "dog", "mouse"), Collections.singletonList(new ArrayList<>()), Collections.singletonList(new ArrayList<>()))
         );
     }
 
@@ -89,12 +99,16 @@ class ConstructStringTest {
 
     @ParameterizedTest
     @MethodSource("allConstructData")
-    void allConstruct(String targetString, List<String> availableString, List<List<String>> expected) {
+    void allConstruct(String targetString, List<String> availableString, List<List<String>> expected, List<List<String>> tabuExpected) {
         for (ConstructString constructStringImpl : constructStringImpls) {
             Stopwatch stopwatch = Stopwatch.createStarted();
             List<List<String>> acc = constructStringImpl.allConstruct(availableString, targetString);
             stopwatch.stop();
-            Assertions.assertEquals(expected, acc);
+            if(constructStringImpl.dpApproachType.equals(DpApproachType.TABULATION)){
+                Assertions.assertEquals(tabuExpected, acc);
+            }else {
+                Assertions.assertEquals(expected, acc);
+            }
             CommonUtils.printStats(stopwatch, constructStringImpl.dpApproachType);
         }
     }
