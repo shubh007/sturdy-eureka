@@ -43,7 +43,8 @@ class ConstructStringTest {
                 Arguments.of("abcdef", Arrays.asList("ab", "abc", "cd", "def", "abcd"), 1),
                 Arguments.of("skateboard", Arrays.asList("bo", "rd", "ate", "t", "ska", "sk", "boar"), 0),
                 Arguments.of("enterapotentpot", Arrays.asList("a", "p", "ent", "enter", "ot", "o", "t"), 4),
-                Arguments.of("eeeeeeeeeeeeeeeeeeeeeeeeeeeef", Arrays.asList("e", "ee", "eee", "eeee", "eeeee", "eeeeee"), 0)
+                Arguments.of("eeeeeeeeeeeeeeeeeeeeeeeeeeeef", Arrays.asList("e", "ee", "eee", "eeee", "eeeee", "eeeeee"), 0),
+                Arguments.of("aaaaaaaaaaaaaaaaaaaaaaaz", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa"), 0)
         );
     }
 
@@ -68,7 +69,7 @@ class ConstructStringTest {
                         Arrays.asList("ab", "cd", "ef")
                 )),
                 Arguments.of("skateboard", Arrays.asList("bo", "rd", "ate", "t", "ska", "sk", "boar"), new ArrayList<>(), new ArrayList<>()),
-                Arguments.of("aaaaaaaaaaaaaaaaaaaaaaaaaaaz", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa"), new ArrayList<>(), new ArrayList<>()),
+                Arguments.of("aaaaaaaaaaaaaaaaaaaaaaaz", Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa"), new ArrayList<>(), new ArrayList<>()),
                 Arguments.of("", Arrays.asList("cat", "dog", "mouse"), Collections.singletonList(new ArrayList<>()), Collections.singletonList(new ArrayList<>()))
         );
     }

@@ -65,9 +65,9 @@ public class ConstructStringTabulation extends ConstructString {
                     if(targetString.startsWith(word,currLen)){
                         List<List<String>> newConst = constructs.get(currLen+word.length());
                         for (List<String> temp : currConst){
-                            List<String> tempL = new ArrayList<>(temp);
-                            tempL.add(word);
-                            newConst.add(tempL);
+                            List<String> tempCopy = new ArrayList<>(temp);
+                            tempCopy.add(word);
+                            newConst.add(tempCopy);
                         }
                         constructs.set(currLen+word.length(),newConst);
                     }
